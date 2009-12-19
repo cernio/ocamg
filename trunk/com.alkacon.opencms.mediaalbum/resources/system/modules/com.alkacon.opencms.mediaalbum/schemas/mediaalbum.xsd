@@ -3,7 +3,6 @@
 	<xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
 	<xsd:include schemaLocation="opencms://system/modules/com.alkacon.opencms.mediaalbum/schemas/configuration.xsd" />
 	<xsd:include schemaLocation="opencms://system/modules/com.alkacon.opencms.mediaalbum/schemas/file.xsd" />
-	<xsd:include schemaLocation="opencms://system/modules/com.alkacon.opencms.mediaalbum/schemas/date.xsd" />
 
 	<xsd:element name="AlkaconMediaAlbums" type="OpenCmsAlkaconMediaAlbums" />
 
@@ -17,10 +16,9 @@
 	<xsd:complexType name="OpenCmsAlkaconMediaAlbum">
 		<xsd:sequence>
 			<xsd:element name="Title" type="OpenCmsString" />
-			<xsd:element name="VfsFolder" type="OpenCmsVfsFile" />
-			<xsd:element name="Date" type="OpenCmsAlkaconMediaAlbumDate" />
 			<xsd:element name="Description" type="OpenCmsHtml" minOccurs="0" />
 			<xsd:element name="FooterText" type="OpenCmsHtml" minOccurs="0" />
+			<xsd:element name="VfsFolder" type="OpenCmsVfsFile" />
 			<xsd:element name="Configuration" type="OpenCmsAlkaconMediaAlbumConfiguration" />
 			<xsd:element name="Files" type="OpenCmsAlkaconMediaAlbumFile" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
@@ -35,12 +33,7 @@
 				<layout element="Description" widget="HtmlWidget" configuration="height:150px,link" />
 				<layout element="FooterText" widget="HtmlWidget" configuration="height:150px,link" />
 			</layouts>
-			<mappings>
-				<mapping element="Date/Date" mapto="property:collector.date" />
-				<mapping element="Date/Date" mapto="attribute:datereleased" />
-			</mappings>
 			<defaults>
-				<default element="Date/Date" value="${currenttime}" />
 				<default element="Configuration/DetailPage" value="pagination.align:right|pagination.top:below|pagination.bottom:above|image.maxsize:none|page.items:all" />
 				<default element="Configuration/Thumbnails" value="width:150|height:150|crop:auto|title:center|filter:none|background:#FFFFFF|quality:80|mode:3|frame:random|rotation:random(-5,5)" />
 			</defaults>

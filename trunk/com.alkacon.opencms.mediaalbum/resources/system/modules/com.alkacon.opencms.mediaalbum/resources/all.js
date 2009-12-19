@@ -66,5 +66,29 @@
         </link>
       </Path>
     </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/js/jquery.hoverIntent.js]]></target>
+          <uuid>5b7b47f0-bbc9-11de-bc19-e30a09512345</uuid>
+        </link>
+      </Path>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/js/jquery.eventdelegation.js]]></target>
+          <uuid>89c64256-ecde-11de-9837-e30a09549264</uuid>
+        </link>
+      </Path>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/js/jquery.buttonMenu.js]]></target>
+          <uuid>123457f0-bbc9-11de-bc19-e30a09512345</uuid>
+        </link>
+      </Path>
+    </Resource>
   </AlkaconOptimizedJs>
 </AlkaconOptimizedJss>

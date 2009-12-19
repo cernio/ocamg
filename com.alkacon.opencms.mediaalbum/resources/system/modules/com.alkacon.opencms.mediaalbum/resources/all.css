@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<AlkaconOptimizedCsss xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="opencms://system/modules/com.alkacon.opencms.weboptimization/schemas/optimized-css.xsd">
+  <AlkaconOptimizedCss language="en">
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/css/ui-lightness/jquery-ui-1.7.2.css]]></target>
+          <uuid>e038f32e-af70-11de-8531-e30a09549264</uuid>
+        </link>
+      </Path>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/css/fancybox.css]]></target>
+          <uuid>8a465724-ebe4-11de-b3ac-e30a09549264</uuid>
+        </link>
+      </Path>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/css/fancybox-sprite.css]]></target>
+          <uuid>829de421-ebe4-11de-b3ac-e30a09549264</uuid>
+        </link>
+      </Path>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/css/pagination.css]]></target>
+          <uuid>0ab9b9c2-ebe7-11de-b3ac-e30a09549264</uuid>
+        </link>
+      </Path>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/css/frames.css]]></target>
+          <uuid>0042df25-e8e9-11de-a8b6-e30a09549264</uuid>
+        </link>
+      </Path>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/css/album.css]]></target>
+          <uuid>cd93a3da-af6b-11de-8531-e30a09549264</uuid>
+        </link>
+      </Path>
+    </Resource>
+  </AlkaconOptimizedCss>
+</AlkaconOptimizedCsss>

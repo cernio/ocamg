@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<AlkaconSprites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="opencms://system/modules/com.alkacon.opencms.weboptimization/schemas/sprite.xsd">
+  <AlkaconSprite language="en">
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_progress.png]]></target>
+          <uuid>752159c1-849b-11dd-b59c-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[0]]></X>
+        <Y><![CDATA[0]]></Y>
+      </Position>
+      <Selector><![CDATA[div#fancy_loading div]]></Selector>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_closebox.png]]></target>
+          <uuid>750e1fd9-849b-11dd-b59c-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[40]]></X>
+        <Y><![CDATA[0]]></Y>
+      </Position>
+      <Selector><![CDATA[div#fancy_close]]></Selector>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_left.png]]></target>
+          <uuid>73f6deb5-154c-11de-87b8-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[40]]></X>
+        <Y><![CDATA[30]]></Y>
+      </Position>
+      <Selector><![CDATA[span#fancy_left_ico]]></Selector>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_right.png]]></target>
+          <uuid>73e3a4d1-154c-11de-87b8-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[40]]></X>
+        <Y><![CDATA[60]]></Y>
+      </Position>
+      <Selector><![CDATA[span#fancy_right_ico]]></Selector>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_shadow_nw.png]]></target>
+          <uuid>753e0995-849b-11dd-b59c-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[42]]></X>
+        <Y><![CDATA[92]]></Y>
+      </Position>
+      <Selector><![CDATA[div.fancy_bg_nw]]></Selector>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_shadow_ne.png]]></target>
+          <uuid>75386441-849b-11dd-b59c-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[55]]></X>
+        <Y><![CDATA[92]]></Y>
+      </Position>
+      <Selector><![CDATA[div.fancy_bg_ne]]></Selector>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_shadow_sw.png]]></target>
+          <uuid>75511c71-849b-11dd-b59c-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[42]]></X>
+        <Y><![CDATA[110]]></Y>
+      </Position>
+      <Selector><![CDATA[div.fancy_bg_sw]]></Selector>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_shadow_se.png]]></target>
+          <uuid>75497b4d-849b-11dd-b59c-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[55]]></X>
+        <Y><![CDATA[110]]></Y>
+      </Position>
+      <Selector><![CDATA[div.fancy_bg_se]]></Selector>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_title_left.png]]></target>
+          <uuid>755eff29-849b-11dd-b59c-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[40]]></X>
+        <Y><![CDATA[130]]></Y>
+      </Position>
+      <Selector><![CDATA[td#fancy_title_left]]></Selector>
+    </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/net.moossen.www/resources/images/fancybox/fancy_title_right.png]]></target>
+          <uuid>756a22c1-849b-11dd-b59c-e30a09549266</uuid>
+        </link>
+      </Path>
+      <Position>
+        <X><![CDATA[55]]></X>
+        <Y><![CDATA[130]]></Y>
+      </Position>
+      <Selector><![CDATA[td#fancy_title_right]]></Selector>
+    </Resource>
+  </AlkaconSprite>
+</AlkaconSprites>

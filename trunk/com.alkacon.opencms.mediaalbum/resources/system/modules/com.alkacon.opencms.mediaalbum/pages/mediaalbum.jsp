@@ -29,7 +29,7 @@ $(document).ready(function() {
 <div class="view-article">
 <cms:contentload collector="singleFile" param="%(opencms.uri)">
 	<cms:contentaccess var="album" />
-        <h2><c:out value="${album.value['Title']}" /></h2>
+    <h2><c:out value="${album.value['Title']}" /></h2>
 
 	<%-- Pagination above top text --%>
 	<c:if test="${cms.configuration['pagination.top'] == 'above' && cms.needsPagination}">
@@ -50,6 +50,7 @@ $(document).ready(function() {
 		</div>
 	</c:if>
 
+	<%-- Thumbnails --%>
 	<div id="album_pages" class='${cms.albumInfo}'>
 		<div id="album_page_${currentPage}">
 			<%-- Show the images in the given vfs path --%>
@@ -59,7 +60,6 @@ $(document).ready(function() {
 			</cms:include>
 		</div>
 	</div>
-
 	<div class="album_clear"></div>
 
 	<%-- Pagination above footer text --%>

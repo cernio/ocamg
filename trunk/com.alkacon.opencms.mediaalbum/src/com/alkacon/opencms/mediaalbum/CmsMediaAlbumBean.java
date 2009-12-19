@@ -29,7 +29,6 @@ import org.opencms.file.CmsResource;
 import org.opencms.file.CmsResourceFilter;
 import org.opencms.file.types.CmsResourceTypeImage;
 import org.opencms.flex.CmsFlexController;
-import org.opencms.i18n.CmsEncoder;
 import org.opencms.i18n.CmsLocaleManager;
 import org.opencms.json.JSONException;
 import org.opencms.json.JSONObject;
@@ -46,7 +45,6 @@ import org.opencms.xml.content.CmsXmlContentFactory;
 import org.opencms.xml.types.I_CmsXmlContentValue;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +55,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.map.LazyMap;
 import org.apache.commons.logging.Log;
@@ -79,6 +76,40 @@ public class CmsMediaAlbumBean extends CmsJspActionElement {
         SETTHUMBINFO,
         /** Sets a thumbnail's title. */
         SETTITLE;
+    }
+
+    /**
+     * Configuration key constants.<p>
+     */
+    protected enum Configuration {
+
+        /** page.items node name.*/
+        ITEMS_PER_PAGE("page.items"),
+        /** image.maxsize node name.*/
+        MAX_IMAGE_SIZE("image.maxsize");
+
+        /** The node name. */
+        private String m_name;
+
+        /**
+         * Constructor.<p>
+         * 
+         * @param name the node name
+         */
+        private Configuration(final String name) {
+
+            m_name = name;
+        }
+
+        /**
+         * Returns the node name.<p>
+         * 
+         * @return the node name
+         */
+        public String getName() {
+
+            return m_name;
+        }
     }
 
     /** Json property name constants for the request data. */
@@ -181,42 +212,8 @@ public class CmsMediaAlbumBean extends CmsJspActionElement {
         }
     }
 
-    /**
-     * Configuration key constants.<p>
-     */
-    private enum Configuration {
-
-        /** page.items node name.*/
-        ITEMS_PER_PAGE("page.items"),
-        /** image.maxsize node name.*/
-        MAX_IMAGE_SIZE("image.maxsize");
-
-        /** The node name. */
-        private String m_name;
-
-        /**
-         * Constructor.<p>
-         * 
-         * @param name the node name
-         */
-        private Configuration(final String name) {
-
-            m_name = name;
-        }
-
-        /**
-         * Returns the node name.<p>
-         * 
-         * @return the node name
-         */
-        public String getName() {
-
-            return m_name;
-        }
-    }
-
     /** Enum for request parameter name constants. */
-    private enum ReqParam {
+    protected enum ReqParam {
         /** The action to execute.*/
         ACTION("action"),
         /** The media album URI.*/
@@ -253,7 +250,7 @@ public class CmsMediaAlbumBean extends CmsJspActionElement {
     }
 
     /** Enum for XML node name constants. */
-    private enum XmlNode {
+    protected enum XmlNode {
         /** Configuration node name.*/
         CONFIGURATION("Configuration"),
         /** DetailPage node name.*/
@@ -298,33 +295,6 @@ public class CmsMediaAlbumBean extends CmsJspActionElement {
 
     /** The log object for this class. */
     private static final Log LOG = CmsLog.getLog(CmsMediaAlbumBean.class);
-
-    /**
-     * Maybe navigation info can be passed as request parameter.<p>
-     * 
-     * @param args not used
-     * 
-     * @throws UnsupportedEncodingException if something goes wrong
-     */
-    public static void main(final String[] args) throws UnsupportedEncodingException {
-
-        final CmsUUID id = new CmsUUID();
-        System.out.println(id);
-        final String enc = new String(
-            Base64.encodeBase64(id.toString().getBytes(CmsEncoder.ENCODING_UTF_8)),
-            CmsEncoder.ENCODING_UTF_8);
-        System.out.println(enc);
-        System.out.println(CmsEncoder.encodeParameter(enc));
-        final String dec = new String(
-            Base64.decodeBase64(enc.getBytes(CmsEncoder.ENCODING_UTF_8)),
-            CmsEncoder.ENCODING_UTF_8);
-        System.out.println(dec);
-        final String enc2 = new String(Base64.encodeBase64(id.toByteArray()), CmsEncoder.ENCODING_UTF_8);
-        System.out.println(enc2);
-        System.out.println(CmsEncoder.encode(enc2));
-        final CmsUUID dec2 = new CmsUUID(Base64.decodeBase64(enc2.getBytes(CmsEncoder.ENCODING_UTF_8)));
-        System.out.println(dec2.toString());
-    }
 
     /** The configuration map. */
     Map<String, String> m_config;
@@ -677,8 +647,6 @@ public class CmsMediaAlbumBean extends CmsJspActionElement {
         return getItemsPerPage() < getImageCount();
     }
 
-    // TODO: add methods for handling dates
-
     /**
      * Saves the given thumbnail information.<p>
      * 
@@ -879,6 +847,11 @@ public class CmsMediaAlbumBean extends CmsJspActionElement {
      */
     protected void saveChanges() throws CmsException {
 
+        if (getRequestContext().currentProject().isOnlineProject()) {
+            // since this is called automatically from #getImages if needed
+            // TODO: find a better way to do that, ie. content handler
+            return;
+        }
         final CmsXmlContent content = getXmlContent();
         final CmsObject cms = getCmsObject();
 

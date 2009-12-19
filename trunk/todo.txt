@@ -1,0 +1,11 @@
+- delete image button: (mark as deleted in xml)
+- properties button (filter, quality, bg color, title, showTitle, top, left, zoom, width, height, thumburi)
+- append filter, quality, rendermode params to original image when editing thumb
+- sort thumbs
+- resize thumb
+- edit frame
+- edit defaults
+- framework for on hover intend button menu
+- cancel button in image editing mode
+- destroy and reinstall fancybox
+ 

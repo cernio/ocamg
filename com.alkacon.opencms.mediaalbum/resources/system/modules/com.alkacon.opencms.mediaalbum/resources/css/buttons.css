@@ -1,0 +1,38 @@
+.menu {
+	position: absolute;
+}
+
+.button {
+	cursor: pointer;
+	float: left;
+}
+
+.icon {
+    background-repeat: no-repeat;
+	background-position: center;
+	height: 20px;
+	width: 20px;
+	display: block;
+	overflow: hidden;
+	text-indent: -99999px;
+}
+
+.ui-state-default .icon-direct-edit {
+	background-image: url(../images/direct-edit.png);
+}
+
+.ui-state-disabled .icon-direct-edit {
+	background-image: url(../images/direct-edit.sw.png);
+}
+
+.ui-state-default .icon-properties {
+	background-image: url(../images/properties.png);
+}
+
+.ui-state-disabled .icon-properties {
+	background-image: url(../images/properties.sw.png);
+}
+
+.ui-state-default .icon-save {
+	background-image: url(../images/save.png);
+}

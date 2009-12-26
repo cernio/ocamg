@@ -15,34 +15,20 @@ var ocamg = {
     serverURI: '%(link:/system/modules/com.alkacon.opencms.mediaalbum/elements/ajax.jsp:600ae89d-bbd1-11de-bc19-e30a09549264)',
     editableTooltip: 'Click here to edit the title'
   },
-  pageselectCallback: function(page_id, jq) {
-	ocamg.loadAlbumPage(page_id+1);
-	return false;
-  },
-  loadAlbumPage: function(page) {
+  loadAlbumPage: function(page, fn) {
 	ocamg.data.lastPage = ocamg.data.currentPage;
 	ocamg.data.currentPage = page;
-	if ( $('#album_page_' + page).length == 0 ) {
-		$('<div/>').load(ocamg.data.albumPageURI, {
+	if ( $('#album_page_' + page).find('div.album_box').length == 0 ) {
+		$('#album_page_' + page).load(ocamg.data.albumPageURI, {
 			album: ocamg.data.albumURI,
 			page: page
-		}, ocamg.onPageLoad).attr('id', 'album_page_' + page).css({'display': 'none'}).appendTo('#album_pages');
+		}, function(){ ocamg.switchPage(fn); }).css({'display': 'none'});
 	} else {
-		ocamg.switchPage();
+		ocamg.switchPage(fn);
 	}
-  },
-  onPageLoad: function() {
-<% if (online) { %>
-      //TODO: update the fancybox's click handler
-       $('#album_page_' + ocamg.data.currentPage + ' a.fancymedia').fancybox({'overlayShow': true, 'hideOnContentClick': true });
-<% } else { %>
-       ocamg.editMode();
-<% } %>
-    ocamg.switchPage();
   },
 <% if (!online) { %>
   editMode: function() {
-      //TODO: install the fancybox's click handler
 	$('#album_page_' + ocamg.data.currentPage + ' div.image-title').each(function() {
       // make the title editable
 	  var $title = $(this);
@@ -79,7 +65,6 @@ var ocamg = {
                 var $img = $(this);
                 var $a = $img.parents('a');
                 $img.attr('src', $a.attr('href'));
-                //TODO: additionally remove the fancybox's click handler
               }).imagetool(opts);
           }
       });
@@ -110,7 +95,6 @@ var ocamg = {
                   loader.removeClass('loading');
                 }).attr('src', response.result);
               }, "json");
-              //TODO: reinstall the fancybox's click handler
           },
           visible: false
       });
@@ -127,25 +111,54 @@ var ocamg = {
 	});
   },
 <% } %>
-  afterFadeOut: function() {
-	$('#album_page_' + ocamg.data.lastPage).hide();
-	$('#album_page_' + ocamg.data.currentPage).
-	  css('opacity', '0').
-	  show().
-	  find(".image-thumbnail").
-	    decorate().
-	  end().
-	  animate({opacity: '1'}, 'slow', null, function() {
-            // $('#album_page_' + currentPage + ' a.fancymedia').imageHover();
-          });
+  switchPage: function(fn) {
+    var last = ocamg.data.lastPage, current = ocamg.data.currentPage;
+    <% if (!online) { %>ocamg.editMode();<% } %>
+    $('#album_page_' + last).animate({opacity: '0'}, { duration:'slow', complete: function() {
+      $('#album_page_' + last).hide();
+      $('#album_page_' + current).
+        css('opacity', '0').
+        show().
+        find(".image-thumbnail").
+          each(ocamg.decorate).
+        end().
+        animate({opacity: '1'}, {duration:'slow', complete: function() {
+          if ($.isFunction(fn)) {
+            fn();
+          }
+        }});
+   }});
   },
-  switchPage: function() {
-	$('#album_page_' + ocamg.data.lastPage).animate({opacity: '0'}, 'slow', null, ocamg.afterFadeOut);
+  decorate: function() {
+    var $this = $(this);
+    var data = $this.metadata();
+    $this.find('img').picFrame(data.frame);
+    $this.parent('div').css('transform', 'rotate(' + data.rotation + 'deg)');
   },
   init: function(options) {
     $.extend(ocamg.data, options);
+	if (window.location.hash.indexOf('#page') === 0) {
+		// use the hash to select the page
+		var page = parseInt(window.location.hash.substring(5));
+		ocamg.data.currentPage = page;
+		if (isNaN(page) || (page < 1)) {
+			page = 1;
+		} else if (ocamg.data.needsPagination) {
+			var lastPage = ocamg.data.imageCount/ocamg.data.itemsPerPage;
+			if (lastPage != parseInt(lastPage)) {
+				lastPage = parseInt(1 + lastPage);
+			}
+			if (page > lastPage) {
+				page = lastPage;
+			}
+		}
+		if (ocamg.data.currentPage != page) {
+			ocamg.data.currentPage = page;
+            window.location.hash='#page'+ocamg.data.currentPage;
+		}
+	}
     $.fn.buttonMenu.defaults.button.iconClass = 'icon';
-    $(".image-thumbnail").decorate();
+    $(".image-thumbnail").each(ocamg.decorate);
     if (ocamg.data.needsPagination) {
       // Create pagination element
       $("#Pagination").pagination(ocamg.data.imageCount, {
@@ -154,18 +167,17 @@ var ocamg = {
         prev_text: ocamg.data.prevText,
         next_text: ocamg.data.nextText,
         items_per_page: ocamg.data.itemsPerPage,
-        callback: ocamg.pageselectCallback
+        current_page: ocamg.data.currentPage - 1,
+        callback: function(page_id, jq, fn) {
+    	  ocamg.loadAlbumPage(page_id+1,fn);
+          window.location.hash='#page'+ocamg.data.currentPage;
+          return false;
+        }
       });
     }
-    ocamg.onPageLoad();
+    // install fancy box
+    $('#album_pages a.fancybox').fancybox({'overlayShow': true, 'hideOnContentClick': true });    
+    // load the initial page
+    ocamg.loadAlbumPage(ocamg.data.currentPage);
   }
-};
-
-$.fn.decorate = function() {
-        return this.each(function() {
-		var $this = $(this);
-		var data = $this.metadata();
-		$this.find('img').picFrame(data.frame);
-		$this.parent('div').css('transform', 'rotate(' + data.rotation + 'deg)');
-	});
 };

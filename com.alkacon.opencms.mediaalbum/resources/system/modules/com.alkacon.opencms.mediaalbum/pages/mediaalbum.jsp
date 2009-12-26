@@ -8,7 +8,7 @@
 %>
 <cms:include property="template" element="head" />
 
-<c:set var="currentPage"><c:out value="${param.page}" default="1"/></c:set>
+<c:set var="currentPage">1</c:set>
 <script type="text/javascript">
 $(document).ready(function() {
   ocamg.init({
@@ -51,15 +51,22 @@ $(document).ready(function() {
 	</c:if>
 
 	<%-- Thumbnails --%>
+    <c:set var="page" value="0" />
+    <c:set var="ipp" value="${cms.itemsPerPage}" />
 	<div id="album_pages" class='${cms.albumInfo}'>
-		<div id="album_page_${currentPage}">
-			<%-- Show the images in the given vfs path --%>
-			<cms:include file="../elements/albumpage.jsp">
-				<cms:param name="album" value="${cms:vfs(pageContext).requestContext.uri}" />
-				<cms:param name="page" value="${currentPage}" />
-			</cms:include>
-		</div>
+<c:forEach items="${cms.images}" var="image" varStatus="status">
+	<c:set var="thumb" value="${cms.thumbnailInfo[image]}" />
+	<c:if test="${(status.index % ipp) == 0}" >
+       <c:set var="page" value="${page+1}" />
+	   <div id="album_page_${page}" style="display:none;">
+	</c:if>
+           <a href="<cms:link>${thumb.imagePath}${thumb.downScaleParam}</cms:link>" title="${thumb.title}" class="fancymedia" rel="mediaalbum" ></a>
+	<c:if test="${(status.index % ipp) == (ipp - 1) || status.last}" >
+       </div>
+	</c:if>
+</c:forEach>
 	</div>
+	
 	<div class="album_clear"></div>
 
 	<%-- Pagination above footer text --%>

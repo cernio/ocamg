@@ -15,9 +15,33 @@ var ocamg = {
     serverURI: '%(link:/system/modules/com.alkacon.opencms.mediaalbum/elements/ajax.jsp:600ae89d-bbd1-11de-bc19-e30a09549264)',
     editableTooltip: 'Click here to edit the title'
   },
-  loadAlbumPage: function(page, fn) {
-	ocamg.data.lastPage = ocamg.data.currentPage;
+  loadAlbumPage: function(hash, fn) {
+	var page = ocamg.data.currentPage;
+	ocamg.data.lastPage = page;
+	if ((hash.indexOf('page') >= 0) && ocamg.data.needsPagination) {
+		// use the hash to select the page
+		var page = parseInt(window.location.hash.replace(/^.*?page/, ''));
+		ocamg.data.currentPage = page;
+		// check the selected page is valid
+		if (isNaN(page) || (page < 1)) {
+			page = 1;
+		} else {
+			var maxPage = ocamg.data.imageCount/ocamg.data.itemsPerPage;
+			if (maxPage != parseInt(maxPage)) {
+				maxPage = 1 + maxPage;
+			}
+			maxPage = parseInt(maxPage);
+			if (page > maxPage) {
+				page = maxPage;
+			}
+		}
+		if (ocamg.data.currentPage != page) {
+			// if it was not valid correct it
+			ocamg.data.currentPage = page;
+		}
+	}
 	ocamg.data.currentPage = page;
+	$('#Pagination').get(0).redrawLinks(page - 1);  // TODO:  this is not needed when coming from pagination.callback
 	if ( $('#album_page_' + page).find('div.album_box').length == 0 ) {
 		$('#album_page_' + page).load(ocamg.data.albumPageURI, {
 			album: ocamg.data.albumURI,
@@ -137,28 +161,10 @@ var ocamg = {
   },
   init: function(options) {
     $.extend(ocamg.data, options);
-	if (window.location.hash.indexOf('#page') === 0) {
-		// use the hash to select the page
-		var page = parseInt(window.location.hash.substring(5));
-		ocamg.data.currentPage = page;
-		if (isNaN(page) || (page < 1)) {
-			page = 1;
-		} else if (ocamg.data.needsPagination) {
-			var lastPage = ocamg.data.imageCount/ocamg.data.itemsPerPage;
-			if (lastPage != parseInt(lastPage)) {
-				lastPage = parseInt(1 + lastPage);
-			}
-			if (page > lastPage) {
-				page = lastPage;
-			}
-		}
-		if (ocamg.data.currentPage != page) {
-			ocamg.data.currentPage = page;
-            window.location.hash='#page'+ocamg.data.currentPage;
-		}
-	}
     $.fn.buttonMenu.defaults.button.iconClass = 'icon';
     $(".image-thumbnail").each(ocamg.decorate);
+    // install fancy box
+    $('#album_pages a.fancybox').fancybox({'overlayShow': true, 'hideOnContentClick': true });    
     if (ocamg.data.needsPagination) {
       // Create pagination element
       $("#Pagination").pagination(ocamg.data.imageCount, {
@@ -169,15 +175,16 @@ var ocamg = {
         items_per_page: ocamg.data.itemsPerPage,
         current_page: ocamg.data.currentPage - 1,
         callback: function(page_id, jq, fn) {
-    	  ocamg.loadAlbumPage(page_id+1,fn);
-          window.location.hash='#page'+ocamg.data.currentPage;
+    	  $.historyLoad('page' + (page_id + 1), fn);
           return false;
         }
       });
+      // install history manager
+      $.historyInit(ocamg.loadAlbumPage);
+      // load the initial page
+      if (!window.location.hash || (window.location.hash.length < 1)) {
+        $.historyLoad('page1');
+      }
     }
-    // install fancy box
-    $('#album_pages a.fancybox').fancybox({'overlayShow': true, 'hideOnContentClick': true });    
-    // load the initial page
-    ocamg.loadAlbumPage(ocamg.data.currentPage);
   }
 };

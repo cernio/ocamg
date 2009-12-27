@@ -139,7 +139,7 @@ jQuery.fn.pagination = function(maxentries, opts){
 		// Store DOM element for easy access from all inner functions
 		var panel = jQuery(this);
 		// Attach control functions to the DOM element 
-		this.selectPage = function(page_id){ pageSelected(page_id);}
+		this.selectPage = function(page_id){ pageSelected(page_id);};
 		this.prevPage = function(){ 
 			if (current_page > 0) {
 				pageSelected(current_page - 1);
@@ -148,7 +148,7 @@ jQuery.fn.pagination = function(maxentries, opts){
 			else {
 				return false;
 			}
-		}
+		};
 		this.nextPage = function(){ 
 			if(current_page < numPages()-1) {
 				pageSelected(current_page+1);
@@ -157,10 +157,12 @@ jQuery.fn.pagination = function(maxentries, opts){
 			else {
 				return false;
 			}
-		}
+		};
+		this.redrawLinks = function(page_id) {
+			current_page = page_id;
+			drawLinks();
+		};
 		// When all initialisation is done, draw the links
 		drawLinks();
 	});
 }
-
-

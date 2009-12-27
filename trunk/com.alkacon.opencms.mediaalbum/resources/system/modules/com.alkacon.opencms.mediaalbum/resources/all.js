@@ -90,5 +90,13 @@
         </link>
       </Path>
     </Resource>
+    <Resource>
+      <Path>
+        <link type="WEAK">
+          <target><![CDATA[/system/modules/com.alkacon.opencms.mediaalbum/resources/js/jquery.history.js]]></target>
+          <uuid>102e4ce0-f2d1-11de-8546-e30a09549264</uuid>
+        </link>
+      </Path>
+    </Resource>
   </AlkaconOptimizedJs>
 </AlkaconOptimizedJss>

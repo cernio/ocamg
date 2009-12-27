@@ -46,7 +46,16 @@ var ocamg = {
 		$('#album_page_' + page).load(ocamg.data.albumPageURI, {
 			album: ocamg.data.albumURI,
 			page: page
-		}, function(){ ocamg.switchPage(fn); }).css({'display': 'none'});
+		}, function(){ 
+		    // install fancy box
+		    $('#album_pages a.fancymedia').fancybox({'overlayShow': true, 'hideOnContentClick': true });
+		    // switch page
+			ocamg.switchPage(function() {
+			    // install direct edit
+			    <% if (!online) { %>ocamg.editMode();<% } %>		    
+				if ($.isFunction(fn)) { fn(); }
+			}); 
+		}).css({'display': 'none'});
 	} else {
 		ocamg.switchPage(fn);
 	}
@@ -137,7 +146,6 @@ var ocamg = {
 <% } %>
   switchPage: function(fn) {
     var last = ocamg.data.lastPage, current = ocamg.data.currentPage;
-    <% if (!online) { %>ocamg.editMode();<% } %>
     $('#album_page_' + last).animate({opacity: '0'}, { duration:'slow', complete: function() {
       $('#album_page_' + last).hide();
       $('#album_page_' + current).
@@ -163,8 +171,6 @@ var ocamg = {
     $.extend(ocamg.data, options);
     $.fn.buttonMenu.defaults.button.iconClass = 'icon';
     $(".image-thumbnail").each(ocamg.decorate);
-    // install fancy box
-    $('#album_pages a.fancybox').fancybox({'overlayShow': true, 'hideOnContentClick': true });    
     if (ocamg.data.needsPagination) {
       // Create pagination element
       $("#Pagination").pagination(ocamg.data.imageCount, {
